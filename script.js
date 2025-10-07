@@ -9,9 +9,21 @@ hamburger.addEventListener('click', () => {
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+    // Don't close menu if it's a dropdown link on mobile
+    if (window.innerWidth <= 768 && n.closest('.dropdown')) {
+        return;
+    }
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
 }));
+
+// Close mobile menu when clicking on dropdown links
+document.querySelectorAll('.dropdown-link').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
 
 // Dropdown menu functionality
 const dropdown = document.querySelector('.dropdown');
@@ -40,7 +52,34 @@ if (dropdown && dropdownMenu) {
     dropdownLink.addEventListener('click', (e) => {
         if (window.innerWidth <= 768) {
             e.preventDefault();
+            e.stopPropagation();
             dropdownMenu.classList.toggle('active');
+            dropdown.classList.toggle('active');
+            
+            // Close other dropdowns if any
+            document.querySelectorAll('.dropdown').forEach(dropdownItem => {
+                if (dropdownItem !== dropdown) {
+                    dropdownItem.classList.remove('active');
+                    dropdownItem.querySelector('.dropdown-menu').classList.remove('active');
+                }
+            });
+        }
+    });
+    
+    // Close dropdown when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            if (!dropdown.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+                dropdown.classList.remove('active');
+            }
+        }
+    });
+    
+    // Close dropdown when window is resized to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            dropdownMenu.classList.remove('active');
         }
     });
 }

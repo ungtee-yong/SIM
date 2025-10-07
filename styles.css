@@ -637,6 +637,16 @@ body {
         margin: 0;
         padding: 0;
         border-radius: 0;
+        display: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    
+    .dropdown-menu.active {
+        display: block;
+        max-height: 300px;
+        padding: 0.5rem 0;
     }
     
     .dropdown-link {
@@ -644,6 +654,7 @@ body {
         padding: 0.5rem 1rem;
         border-left: none;
         border-bottom: 1px solid rgba(255,255,255,0.1);
+        display: block;
     }
     
     .dropdown-link:hover {
@@ -652,12 +663,8 @@ body {
         transform: none;
     }
     
-    .dropdown-menu.active {
-        display: block;
-    }
-    
-    .dropdown-menu:not(.active) {
-        display: none;
+    .dropdown.active .dropdown-arrow {
+        transform: rotate(180deg);
     }
     
     .nav-menu.active {
