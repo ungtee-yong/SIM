@@ -13,6 +13,38 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
     navMenu.classList.remove('active');
 }));
 
+// Dropdown menu functionality
+const dropdown = document.querySelector('.dropdown');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+if (dropdown && dropdownMenu) {
+    // Show dropdown on hover for desktop
+    dropdown.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 768) {
+            dropdownMenu.style.opacity = '1';
+            dropdownMenu.style.visibility = 'visible';
+            dropdownMenu.style.transform = 'translateY(0)';
+        }
+    });
+    
+    dropdown.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 768) {
+            dropdownMenu.style.opacity = '0';
+            dropdownMenu.style.visibility = 'hidden';
+            dropdownMenu.style.transform = 'translateY(-10px)';
+        }
+    });
+    
+    // Toggle dropdown on click for mobile
+    const dropdownLink = dropdown.querySelector('.nav-link');
+    dropdownLink.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('active');
+        }
+    });
+}
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
